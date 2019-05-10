@@ -75,6 +75,8 @@ func main() {
 	gin.DisableConsoleColor()
 	router := gin.Default()
 	router.StaticFile("/", "./index.html")
+	router.StaticFile("/app.css", "./app.css")
+	router.StaticFile("/app.js", "./app.js")
 	router.GET("/reading", getReading)
 	router.POST("/reading", postReading)
 	router.Run()
