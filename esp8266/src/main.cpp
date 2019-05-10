@@ -50,7 +50,8 @@ void sendReadings()
     const uint16_t szBuffer = JSON_OBJECT_SIZE(4);
     StaticJsonDocument<szBuffer> document;
     char jsonMessage[szBuffer];
-    HTTPClient client;
+    WiFiClient client;
+    HTTPClient clientHttp;
 
     bme.takeForcedMeasurement();
     document["sensor"] = ESP.getChipId();
@@ -59,11 +60,11 @@ void sendReadings()
     document["pressure"] = bme.readPressure() / 100.0f;
     serializeJson(document, Serial);
     serializeJson(document, jsonMessage);
-    client.begin(API_PATH);
-    client.addHeader("Content-Type", "application/json");
-    client.POST(jsonMessage);
-    Serial.println(client.getString());
-    client.end();
+    clientHttp.begin(client, API_PATH);
+    clientHttp.addHeader("Content-Type", "application/json");
+    clientHttp.POST(jsonMessage);
+    Serial.println(clientHttp.getString());
+    clientHttp.end();
 }
 
 void setup()
