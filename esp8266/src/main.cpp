@@ -48,18 +48,17 @@ void goDeepSleep()
 void sendReadings()
 {
     const uint16_t szBuffer = JSON_OBJECT_SIZE(4);
-    StaticJsonBuffer<szBuffer> buffer;
-    char jsonMessage[255];
-    JsonObject& encoder = buffer.createObject();
+    StaticJsonDocument<szBuffer> document;
+    char jsonMessage[szBuffer];
     HTTPClient client;
 
     bme.takeForcedMeasurement();
-    encoder["sensor"] = ESP.getChipId();
-    encoder["temperature"] = bme.readTemperature();
-    encoder["humidity"] = bme.readHumidity();
-    encoder["pressure"] = bme.readPressure() / 100.0f;
-    encoder.printTo(Serial);
-    encoder.printTo(jsonMessage, sizeof(jsonMessage));
+    document["sensor"] = ESP.getChipId();
+    document["temperature"] = bme.readTemperature();
+    document["humidity"] = bme.readHumidity();
+    document["pressure"] = bme.readPressure() / 100.0f;
+    serializeJson(document, Serial);
+    serializeJson(document, jsonMessage);
     client.begin(API_PATH);
     client.addHeader("Content-Type", "application/json");
     client.POST(jsonMessage);
