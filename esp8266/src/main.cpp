@@ -25,6 +25,7 @@ bool connectWiFi()
 {
     uint8_t wifiTimeout = 0;
 
+    WiFi.persistent(false);
     WiFi.mode(WIFI_STA);
     WiFi.begin(WIFI_SSID, WIFI_PASS);
     while (!WiFi.isConnected()) {
@@ -42,7 +43,7 @@ bool connectWiFi()
 
 void goDeepSleep()
 {
-    ESP.deepSleep(60000000);
+    ESP.deepSleep(60e6);
 }
 
 void sendReadings()
