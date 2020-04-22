@@ -1,5 +1,5 @@
 /**
- *  Copyright 2019 Łukasz Kieś
+ *  Copyright 2019-2020 Łukasz Kieś
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,25 @@
 
 #include <Adafruit_BME280.h>
 
-#define WIFI_SSID "ssid"
-#define WIFI_PASS "password"
-#define API_PATH "192.168.1.1:8080/reading"
+#ifdef DEBUG
+    #define DEBUG_PRINTLN(x) Serial.println(x)
+    #define DEBUG_PRINT(x) Serial.print(x)
+#else
+    #define DEBUG_PRINTLN(x)
+    #define DEBUG_PRINT(x)
+#endif
+
+#ifndef WIFI_SSID
+    #define WIFI_SSID "ssid"
+#endif
+
+#ifndef WIFI_PASS
+    #define WIFI_PASS "password"
+#endif
+
+#ifndef API_PATH
+    #define API_PATH "192.168.1.1:8080/reading"
+#endif
 
 bool connectWiFi();
 void goDeepSleep();

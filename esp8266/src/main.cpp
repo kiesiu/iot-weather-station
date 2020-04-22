@@ -1,5 +1,5 @@
 /**
- *  Copyright 2019 Łukasz Kieś
+ *  Copyright 2019-2020 Łukasz Kieś
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ bool connectWiFi()
             return false;
         }
     }
-    Serial.print("IP: ");
-    Serial.println(WiFi.localIP());
+    DEBUG_PRINT("IP: ");
+    DEBUG_PRINTLN(WiFi.localIP());
 
     return true;
 }
@@ -69,12 +69,14 @@ void sendReadings()
 
 void setup()
 {
-    Serial.begin(74880);
-    while (!Serial) {
-        yield();
-    }
+    #ifdef DEBUG
+        Serial.begin(74880);
+        while (!Serial) {
+            yield();
+        }
+    #endif
     if (!bme.begin()) {
-        Serial.println("Cannot connect to BME280!");
+        DEBUG_PRINTLN("Cannot connect to BME280!");
         goDeepSleep();
     }
     bme.setSampling(Adafruit_BME280::MODE_FORCED,
@@ -82,7 +84,7 @@ void setup()
         Adafruit_BME280::SAMPLING_X1,
         Adafruit_BME280::SAMPLING_X1);
     if (!connectWiFi()) {
-        Serial.println("Cannot connect to WiFI!");
+        DEBUG_PRINTLN("Cannot connect to WiFI!");
         goDeepSleep();
     }
     sendReadings();
