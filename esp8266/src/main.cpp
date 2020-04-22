@@ -58,12 +58,14 @@ void sendReadings()
     document["temperature"] = bme.readTemperature();
     document["humidity"] = bme.readHumidity();
     document["pressure"] = bme.readPressure() / 100.0f;
-    serializeJson(document, Serial);
+    #ifdef DEBUG
+        serializeJson(document, Serial);
+    #endif
     serializeJson(document, jsonMessage);
     clientHttp.begin(client, API_PATH);
     clientHttp.addHeader("Content-Type", "application/json");
     clientHttp.POST(jsonMessage);
-    Serial.println(clientHttp.getString());
+    DEBUG_PRINTLN(clientHttp.getString());
     clientHttp.end();
 }
 
