@@ -1,11 +1,10 @@
-# IOT Weather Station
+# IoT Weather Station
 
-Simple weather monitoring station based on ESP8266 powered device.
-Includes client code for ESP8266 based devices and server web service.
+The following project is a simple implementation of a weather monitoring station based on the ESP8266 powered device. It runs as a client for platform-independent server web service written using Go and a little bit of JavaScript.
 
 ## Built with
 
-Project would not be possible without following great open source libraries.
+This project would not be possible without following great open source libraries.
 
 Client code for IOT device:
 * [ESP8266 core for Arduino](https://github.com/esp8266/Arduino)
