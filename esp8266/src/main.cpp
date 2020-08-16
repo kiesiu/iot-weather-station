@@ -28,10 +28,12 @@ bool connectWiFi()
     WiFi.persistent(false);
     WiFi.mode(WIFI_STA);
     WiFi.begin(WIFI_SSID, WIFI_PASS);
-    while (!WiFi.isConnected()) {
+    while (!WiFi.isConnected())
+    {
         delay(100);
         wifiTimeout++;
-        if (wifiTimeout > 100) {
+        if (wifiTimeout > 100)
+        {
             return false;
         }
     }
@@ -59,9 +61,9 @@ void sendReadings()
     document["temperature"] = bme.readTemperature();
     document["humidity"] = bme.readHumidity();
     document["pressure"] = bme.readPressure() / 100.0f;
-    #ifdef DEBUG
-        serializeJson(document, Serial);
-    #endif
+#ifdef DEBUG
+    serializeJson(document, Serial);
+#endif
     serializeJson(document, jsonMessage);
     clientHttp.begin(client, API_PATH);
     clientHttp.addHeader("Content-Type", "application/json");
@@ -72,21 +74,24 @@ void sendReadings()
 
 void setup()
 {
-    #ifdef DEBUG
-        Serial.begin(74880);
-        while (!Serial) {
-            yield();
-        }
-    #endif
-    if (!bme.begin()) {
+#ifdef DEBUG
+    Serial.begin(74880);
+    while (!Serial)
+    {
+        yield();
+    }
+#endif
+    if (!bme.begin())
+    {
         DEBUG_PRINTLN("Cannot connect to BME280!");
         goDeepSleep();
     }
     bme.setSampling(Adafruit_BME280::MODE_FORCED,
-        Adafruit_BME280::SAMPLING_X1,
-        Adafruit_BME280::SAMPLING_X1,
-        Adafruit_BME280::SAMPLING_X1);
-    if (!connectWiFi()) {
+                    Adafruit_BME280::SAMPLING_X1,
+                    Adafruit_BME280::SAMPLING_X1,
+                    Adafruit_BME280::SAMPLING_X1);
+    if (!connectWiFi())
+    {
         DEBUG_PRINTLN("Cannot connect to WiFI!");
         goDeepSleep();
     }

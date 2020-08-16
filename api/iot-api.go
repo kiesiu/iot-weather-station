@@ -1,5 +1,5 @@
 /**
- *  Copyright 2019 Łukasz Kieś
+ *  Copyright 2019-2020 Łukasz Kieś
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ func getReading(c *gin.Context) {
 
 	if err := db.Order("created_at desc").Limit(60).Find(&allReadings).Error; err != nil {
 		c.JSON(http.StatusServiceUnavailable, gin.H{"message": err.Error()})
+
 		return
 	}
 	c.JSON(200, allReadings)
@@ -51,6 +52,7 @@ func postReading(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&newReading); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+
 		return
 	}
 	newReading.DewPoint = math.Round((math.Pow(newReading.Humidity/100, 1.0/8.0)*
@@ -58,6 +60,7 @@ func postReading(c *gin.Context) {
 		100.0) / 100.0
 	if err := db.Create(&newReading).Error; err != nil {
 		c.JSON(http.StatusServiceUnavailable, gin.H{"message": err.Error()})
+
 		return
 	}
 	c.JSON(http.StatusCreated, newReading)

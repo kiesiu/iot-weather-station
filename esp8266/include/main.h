@@ -17,23 +17,23 @@
 #include <Adafruit_BME280.h>
 
 #ifdef DEBUG
-    #define DEBUG_PRINTLN(x) Serial.println(x)
-    #define DEBUG_PRINT(x) Serial.print(x)
+#define DEBUG_PRINTLN(x) Serial.println(x)
+#define DEBUG_PRINT(x) Serial.print(x)
 #else
-    #define DEBUG_PRINTLN(x)
-    #define DEBUG_PRINT(x)
+#define DEBUG_PRINTLN(x)
+#define DEBUG_PRINT(x)
 #endif
 
 #ifndef WIFI_SSID
-    #define WIFI_SSID "ssid"
+#define WIFI_SSID "ssid"
 #endif
 
 #ifndef WIFI_PASS
-    #define WIFI_PASS "password"
+#define WIFI_PASS "password"
 #endif
 
 #ifndef API_PATH
-    #define API_PATH "192.168.1.1:8080/reading"
+#define API_PATH "192.168.1.1:8080/reading"
 #endif
 
 bool connectWiFi();
